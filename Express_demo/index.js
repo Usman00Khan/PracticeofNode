@@ -1,7 +1,16 @@
 const Joi = require('joi')
+const morgan = require('morgan')
 const express = require('express')
+const logger = require('./logger')
 const app = express()
+
 app.use(express.json())
+app.use(express.urlencoded({exteded:true}))
+app.use(express.static('Public'))
+app.use(logger.log)
+app.use(logger.auth)
+app.use(morgan('tiny'))
+
 courses = [
     {id:1, name: 'course 1'},
     {id:2, name: 'course 2'},
