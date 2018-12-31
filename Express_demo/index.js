@@ -1,3 +1,4 @@
+const config = require('config')
 const Joi = require('joi')
 const morgan = require('morgan')
 const express = require('express')
@@ -9,7 +10,16 @@ app.use(express.urlencoded({exteded:true}))
 app.use(express.static('Public'))
 app.use(logger.log)
 app.use(logger.auth)
-app.use(morgan('tiny'))
+
+console.log("Application name: " + config.get('name'))
+console.log("Sever name: " + config.get('mail.host'))
+console.log("Password: " + config.get('password'))
+console.log()
+
+if (app.get('env') === 'development') {
+    app.use(morgan('tiny'))
+    console.log('morgan enabled')
+}
 
 courses = [
     {id:1, name: 'course 1'},
